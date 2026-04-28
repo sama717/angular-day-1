@@ -43,7 +43,7 @@
 }
 
 .product-price {
-  color: #e8ff00;
+  /* color: #e8ff00; */
   font-weight: 700;
   font-size: 1rem;
   margin-bottom: 0.8rem;
@@ -51,8 +51,8 @@
 
 .add-to-cart {
   width: 100%;
-  background: #e8ff00;
-  color: #000;
+  /* background: #e8ff00;
+  color: #000; */
   border: none;
   padding: 0.5rem;
   font-size: 0.8rem;

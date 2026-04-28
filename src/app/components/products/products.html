@@ -1,58 +1,37 @@
 <section class="products-section">
   <div class="container">
-
     <p class="section-tag">Featured</p>
-
+    <select [(ngModel)]="selectedBrand" (change)="filterProducts($event)" class="form-select mb-4 w-auto">
+      <option value="All">All</option>
+      <option value="Nike">Nike</option>
+      <option value="Adidas">Adidas</option>
+      <option value="New Balance">New Balance</option>
+      <option value="Jordan">Jordan</option>
+    </select>
     <div class="row g-4">
-
-      <div class="col-6 col-lg-3">
-        <div class="product-card">
-          <img src="https://www.nike.ae/dw/image/v2/BDVB_PRD/on/demandware.static/-/Sites-akeneo-master-catalog/default/dwf1f0c444/nk/938/6/9/e/2/3/93869e23_0dba_425d_b20b_b12893181d68.jpg?sw=700&sh=700&sm=fit&q=100&strip=false" alt="Air Max Pulse" class="product-img">
-          <div class="product-info">
-            <p class="product-brand">Nike</p>
-            <p class="product-name">Air Max Pulse</p>
-            <p class="product-price">$149</p>
-            <button class="add-to-cart">Add to Cart</button>
+      @for (product of filteredProducts(); track $index) {
+        <div class="col-6 col-lg-3">
+          <div class="product-card">
+            <img [src]="product.img" [attr.alt]="product.name" class="product-img" />
+            <div class="product-info">
+              <p class="product-brand">{{ product.brand }}</p>
+              <p class="product-name">{{ product.name }}</p>
+              <p class="product-price" [style.color]="product.price > 120 ? 'red' : 'green'">
+                <span>$</span>{{ product.price }}
+              </p>
+              <span
+                class="badge mb-2"
+                [class]="{ 'bg-success': product.inStock, 'bg-danger': !product.inStock }"
+              >
+                {{ product.inStock ? 'In Stock' : 'Out of Stock' }}
+              </span>
+              <button class="add-to-cart" (click)="showAlert(product.name)" [disabled]="!product.inStock">Add to Cart</button>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="col-6 col-lg-3">
-        <div class="product-card">
-          <img src="https://assets.adidas.com/images/w_1880,f_auto,q_auto/3faa5029e332454382c3f62d06d6595e_9366/IH7828_01_standard.jpg" alt="Forum Low" class="product-img">
-          <div class="product-info">
-            <p class="product-brand">Adidas</p>
-            <p class="product-name">Forum Low</p>
-            <p class="product-price">$119</p>
-            <button class="add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-6 col-lg-3">
-        <div class="product-card">
-          <img src="https://images.stockx.com/images/New-Balance-550-White-Green-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&fm=webp&auto=compress&q=90&dpr=2&trim=color&updated_at=1738193358" alt="550 White Green" class="product-img">
-          <div class="product-info">
-            <p class="product-brand">New Balance</p>
-            <p class="product-name">550 White Green</p>
-            <p class="product-price">$109</p>
-            <button class="add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-6 col-lg-3">
-        <div class="product-card">
-          <img src="https://static.nike.com/a/images/t_web_pdp_936_v2/f_auto,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/6615ad40-4678-487c-9786-80fb23539258/AIR+JORDAN+1+LOW.png" alt="Air Jordan 1 Low" class="product-img">
-          <div class="product-info">
-            <p class="product-brand">Jordan</p>
-            <p class="product-name">Air Jordan 1 Low</p>
-            <p class="product-price">$179</p>
-            <button class="add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-
+      } @empty {
+        <p class="text-white">No products available</p>
+      }
     </div>
   </div>
 </section>
